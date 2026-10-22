@@ -1,12 +1,14 @@
+
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import netlify from "@netlify/vite-plugin-tanstack-start";
+import { nitro } from "nitro/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig({
   plugins: [
     tailwindcss(),
+
     tanstackStart({
       importProtection: {
         behavior: "error",
@@ -15,17 +17,28 @@ export default defineConfig(({ command }) => ({
           specifiers: ["server-only"],
         },
       },
-      server: { entry: "server" },
+      server: {
+        entry: "server",
+      },
     }),
-    ...(command === "build" ? [netlify()] : []),
+
+    nitro(),
+
     react(),
   ],
+
   resolve: {
     tsconfigPaths: true,
-    dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
+    dedupe: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+    ],
   },
+
   server: {
     host: "::",
     port: 8080,
   },
-}));
+});
