@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Atlus — daily news, personalised for you</title>
+  <desc id="description">Daily news, personalised for you.</desc>
+  <rect width="1200" height="630" fill="#0D1B2A"/>
+  <path d="M0 485 C220 430 390 552 630 488 S1018 410 1200 470" fill="none" stroke="#FF6B35" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+  <path d="M0 503 C220 448 392 570 630 506 S1018 428 1200 488" fill="none" stroke="#FF6B35" stroke-width="3" stroke-linecap="round" opacity=".58"/>
+  <text x="96" y="185" fill="#F8F9FA" font-family="Georgia, serif" font-size="102" font-weight="700" letter-spacing="-6">Join Atlus</text>
+  <text x="96" y="277" fill="#FF6B35" font-family="cursive" font-size="76">daily news, personalised for you.</text>
+  <text x="96" y="554" fill="#F8F9FA" font-family="Arial, sans-serif" font-size="22" letter-spacing="5" opacity=".75">JOINATLUS.COM</text>
+</svg>

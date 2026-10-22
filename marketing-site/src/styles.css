@@ -1,0 +1,1066 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* Atlus brand tokens */
+  --color-parchment: var(--parchment);
+  --color-parchment-2: var(--parchment-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-peach: var(--peach);
+  --color-sky: var(--sky);
+  --color-butter: var(--butter);
+  --color-coral: var(--coral);
+  --color-teal: var(--teal);
+  --color-purple: var(--purple);
+  --color-purple-deep: var(--purple-deep);
+  --color-blue: var(--blue);
+  --color-blue-deep: var(--blue-deep);
+  --color-marker: var(--marker);
+  --color-lime: var(--lime);
+  --color-orange: var(--orange);
+
+  /* Atlus 15a lockup tokens */
+  --color-royal: var(--royal);
+  --color-royal-soft: var(--royal-soft);
+  --color-platinum: var(--platinum);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-amber-ink: var(--amber-ink);
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-serif: "PT Serif", Georgia, serif;
+  --font-hand: "Reenie Beanie", "Caveat", cursive;
+  --font-hand-alt: "Caveat", cursive;
+  /* Reenie Beanie ships one weight (400). The handwritten "u" sits inside the
+     Playfair wordmark at weight 800, so it inherited 800 and the browser faked
+     the bold by smearing the glyph outward — which is why the logo's u stopped
+     looking like Reenie Beanie at all. Always set the real weight, and refuse
+     synthesis outright so this can't silently come back. */
+  --font-marker: "Permanent Marker", "Kalam", cursive;
+  --font-scrawl: "Kalam", "Reenie Beanie", cursive;
+}
+
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(0.965 0.015 85);
+  --foreground: oklch(0.22 0.02 250);
+  --card: oklch(0.98 0.01 85);
+  --card-foreground: oklch(0.22 0.02 250);
+  --muted: oklch(0.92 0.015 85);
+  --muted-foreground: oklch(0.5 0.02 250);
+  --border: oklch(0.86 0.02 80);
+  --primary: oklch(0.22 0.02 250);
+  --primary-foreground: oklch(0.97 0.01 85);
+
+  --parchment: oklch(0.96 0.02 85); /* #FBF6EE */
+  --parchment-2: oklch(0.97 0.014 85); /* #FAF9F5 */
+  --ink: oklch(0.22 0.02 250); /* #2B2621-ish deep */
+  --ink-soft: oklch(0.32 0.02 250);
+  --navy: oklch(0.28 0.045 255); /* #172033 */
+  --navy-deep: oklch(0.22 0.05 260); /* darker */
+  --peach: oklch(0.85 0.08 55); /* #F6C8A0 */
+  --sky: oklch(0.83 0.06 235); /* #AFCFE0 */
+  --butter: oklch(0.89 0.09 90); /* #F1DC9B */
+  --coral: oklch(0.7 0.15 25); /* #E56A5C */
+  --teal: oklch(0.58 0.08 190); /* #3F9E93 */
+  --purple: oklch(0.65 0.16 300); /* #A57CE0 */
+  --purple-deep: oklch(0.55 0.14 305);
+  --blue: oklch(0.62 0.14 260); /* #4E7DDB */
+  --blue-deep: oklch(0.35 0.12 265);
+  --marker: oklch(0.7 0.19 45); /* orange marker */
+  --lime: oklch(0.9 0.19 115); /* #D6F03A */
+  --orange: oklch(0.72 0.18 45); /* #F26D3A */
+
+  /* Atlus 15a — deep royal blue / platinum / burnt orange */
+  --royal: #0d1b2a;
+  --royal-soft: #142234;
+  --platinum: #f8f9fa;
+  --amber: #ff6b35;
+  --amber-soft: #ff8656;
+  /* Amber for TEXT on the light grounds. #FF6B35 scores 2.7:1 on platinum and
+     2.4:1 on parchment — under WCAG AA (4.5:1) and under even the 3:1 large-text
+     floor, so eyebrow labels and handwritten accents were failing everywhere the
+     background wasn't royal. This darker burnt tone clears AA on both (5.5:1 and
+     4.8:1). Keep --amber itself for dark grounds, where it already scores 6.1:1. */
+  --amber-ink: #b83a0c;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html,
+  body {
+    background-color: var(--color-parchment);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+  }
+  /* Single place the handwriting is set up, so the weight can't drift again. */
+  .handwriting,
+  .hand {
+    font-family: var(--font-hand);
+    font-weight: 400;
+    font-synthesis-weight: none;
+    font-synthesis: none;
+  }
+  .hand {
+    color: var(--color-amber);
+  }
+}
+
+/* The dark handoff shares the onboarding page's ground and wordmark. */
+.onboarding-handoff {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--royal);
+  color: var(--platinum);
+  animation: handoff-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.onboarding-handoff__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+}
+.onboarding-handoff__wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 10vw, 78px);
+  font-weight: 800;
+  line-height: 1;
+}
+.onboarding-handoff__wordmark .brand-u {
+  color: var(--amber);
+}
+.onboarding-handoff__line {
+  width: 80px;
+  height: 2px;
+  background: var(--amber);
+  transform-origin: left;
+  animation: handoff-line 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes handoff-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes handoff-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-handoff,
+  .onboarding-handoff__line {
+    animation: none;
+  }
+}
+
+/* A continuous strip of familiar source marks. The second group is a hidden duplicate
+   that makes the loop seamless without duplicating announcements for screen readers. */
+.source-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+.source-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: source-marquee-scroll 42s linear infinite;
+}
+.source-marquee__group {
+  display: flex;
+  flex: none;
+  gap: 14px;
+  padding-right: 14px;
+}
+.source-card {
+  display: flex;
+  width: 220px;
+  min-height: 82px;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(248, 249, 250, 0.17);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 14px 17px;
+  color: var(--color-royal);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+.source-card__logo {
+  display: block;
+  width: 150px;
+  height: 38px;
+  object-fit: contain;
+}
+.source-card__name {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  line-height: 1;
+  opacity: 0.58;
+}
+@keyframes source-marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .source-marquee {
+    overflow: visible;
+    mask-image: none;
+  }
+  .source-marquee__track {
+    width: auto;
+    animation: none;
+  }
+  .source-marquee__group {
+    flex-wrap: wrap;
+  }
+  .source-marquee__group[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* The supplied affiliations sit directly on the founders photo as small editorial stickers. */
+.university-marks {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.university-mark {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 7px 18px rgba(13, 27, 42, 0.24);
+  transition: transform 200ms ease;
+}
+.university-mark--durham {
+  left: clamp(12px, 2vw, 24px);
+  top: clamp(12px, 2vw, 24px);
+  width: clamp(116px, 21vw, 190px);
+  transform: rotate(-2deg);
+}
+.university-mark--cambridge {
+  right: clamp(12px, 2vw, 24px);
+  top: clamp(12px, 2vw, 24px);
+  width: clamp(58px, 10vw, 92px);
+  transform: rotate(2deg);
+}
+.butler-crest {
+  position: absolute;
+  right: clamp(12px, 2vw, 24px);
+  bottom: clamp(12px, 2vw, 24px);
+  z-index: 10;
+  width: clamp(56px, 9vw, 104px);
+  filter: drop-shadow(0 5px 10px rgba(13, 27, 42, 0.24));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .why-us-pop:not(.is-revealed) .founders-photo,
+  .why-us-pop:not(.is-revealed) .university-mark,
+  .why-us-pop:not(.is-revealed) .butler-crest {
+    opacity: 0;
+  }
+  .why-us-pop.is-revealed .founders-photo {
+    animation: founders-photo-arrive 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .why-us-pop.is-revealed .university-mark {
+    animation: university-mark-arrive 680ms 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .why-us-pop.is-revealed .university-mark--cambridge {
+    animation-delay: 430ms;
+  }
+  .why-us-pop.is-revealed .butler-crest {
+    animation: butler-crest-arrive 720ms 540ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+@keyframes founders-photo-arrive {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes university-mark-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.88) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+@keyframes butler-crest-arrive {
+  from {
+    opacity: 0;
+    transform: scale(0.82) rotate(4deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .university-mark:hover {
+    transform: translateY(-3px) rotate(0);
+  }
+  .butler-crest:hover {
+    transform: scale(1.05) rotate(-2deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .university-mark,
+  .butler-crest {
+    animation: none;
+    transition: none;
+  }
+}
+@media (max-width: 480px) {
+  .university-mark--durham {
+    width: 104px;
+  }
+  .university-mark--cambridge {
+    width: 54px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .why-now-pop:not(.is-revealed) .why-now-stat,
+  .problem-pop:not(.is-revealed) .problem-pop__item {
+    opacity: 0;
+  }
+  .why-now-pop.is-revealed .why-now-stat {
+    animation: why-now-stat-arrive 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .why-now-pop.is-revealed .why-now-stat:nth-child(2) {
+    animation-delay: 110ms;
+  }
+}
+@keyframes why-now-stat-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .why-now-stat {
+    animation: none;
+  }
+}
+
+/* The problem reveals as a short editorial sequence once it enters the viewport. */
+.problem-pop.is-revealed .problem-pop__item {
+  animation: problem-pop-arrive 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.problem-pop.is-revealed > div .problem-pop__item {
+  animation-delay: 110ms;
+}
+.problem-pop.is-revealed > div .problem-pop__item:nth-child(2) {
+  animation-delay: 220ms;
+}
+@keyframes problem-pop-arrive {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-24px) rotate(-1deg);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) rotate(0);
+  }
+}
+@media (max-width: 640px) {
+  .founder-photo-note {
+    right: 4% !important;
+    top: 8% !important;
+    width: 44% !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .problem-pop.is-revealed .problem-pop__item {
+    animation: none;
+  }
+}
+
+/* The Daily Atlus: motion resolves into a calm, readable editorial composition. */
+.atlus-hero {
+  position: relative;
+  overflow: clip;
+  background: var(--color-royal);
+  color: var(--color-platinum);
+  padding: 148px 6vw 40px;
+}
+.atlus-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(248, 249, 250, 0.023) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248, 249, 250, 0.023) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+.atlus-hero-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  column-gap: clamp(36px, 6vw, 100px);
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+  min-height: min(720px, 78svh);
+}
+.atlus-hero-layout--intro {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: min(560px, 68svh);
+}
+.daily-atlus-dash {
+  display: block;
+  max-width: 760px;
+  min-height: auto;
+  margin: 0 auto;
+}
+.daily-atlus-dash .edition-stage {
+  height: 660px;
+}
+.daily-atlus-dash .edit-story {
+  min-height: 0;
+}
+.hero-introduction {
+  padding-bottom: 24px;
+}
+.hero-eyebrow {
+  margin: 0 0 24px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(248, 249, 250, 0.65);
+}
+.hero-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(90px, 9.4vw, 136px);
+  font-weight: 800;
+  letter-spacing: -0.065em;
+  line-height: 0.99;
+}
+.hero-word {
+  position: relative;
+  display: block;
+  width: fit-content;
+}
+.hero-atlus {
+  padding-bottom: 0.18em;
+}
+.hero-u {
+  display: inline-flex;
+  font-size: 1.04em;
+  line-height: 0.72;
+  vertical-align: -0.035em;
+  letter-spacing: 0;
+  margin: 0 0.015em;
+  color: var(--color-amber);
+  transform: rotate(-2deg);
+}
+.hero-signature {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -0.005em;
+  pointer-events: none;
+  color: var(--color-amber);
+  overflow: visible;
+}
+.hero-tagline {
+  margin: 24px 0 14px;
+  font-size: clamp(19px, 1.8vw, 24px);
+  line-height: 1.2;
+}
+.hero-tagline .hand {
+  display: block;
+  font-size: 1.6em;
+  color: var(--color-amber);
+  margin-top: 4px;
+}
+.hero-description {
+  max-width: 410px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(248, 249, 250, 0.7);
+}
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 27px;
+}
+.hero-primary-cta,
+.hero-secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-height: 48px;
+  font-size: 14px;
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s;
+}
+.hero-primary-cta {
+  border-radius: 999px;
+  padding: 13px 23px;
+  color: var(--color-royal);
+  background: var(--color-amber);
+  font-weight: 700;
+}
+.hero-primary-cta:hover {
+  background: var(--color-amber-soft);
+  transform: translateY(-2px);
+}
+.hero-secondary-cta {
+  color: var(--color-platinum);
+  border-bottom: 1px solid rgba(248, 249, 250, 0.32);
+}
+.hero-secondary-cta:hover {
+  transform: translateY(-2px);
+}
+.hero-footnote {
+  margin-top: 18px;
+  color: rgba(248, 249, 250, 0.55);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.hero-edition {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+}
+.daily-atlus-dash {
+  overflow: clip;
+}
+.edition-stage {
+  position: relative;
+  height: 544px;
+  width: 100%;
+  isolation: isolate;
+}
+.edition-orbit {
+  position: absolute;
+  width: 124%;
+  height: 96%;
+  left: -12%;
+  top: 1%;
+  border: 1px solid rgba(248, 249, 250, 0.075);
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  z-index: -2;
+}
+.edition-orbit-inner {
+  width: 103%;
+  height: 83%;
+  top: 7%;
+  left: -2%;
+  transform: rotate(22deg);
+  border-color: rgba(248, 249, 250, 0.035);
+}
+.edition-thread {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+.edit-thread {
+  opacity: 0;
+}
+.edit-paper {
+  position: absolute;
+  inset: 6px -14px 14px;
+  border: 1px solid rgba(248, 249, 250, 0.2);
+  border-radius: 20px;
+  background: #142234;
+  box-shadow: 0 28px 65px rgba(0, 0, 0, 0.14);
+  z-index: -1;
+}
+.edit-masthead {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.edit-kicker {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+.edit-for-you {
+  font-size: 27px;
+  color: var(--color-amber);
+  transform: rotate(-5deg);
+}
+.edition-stories {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 84px;
+  display: grid;
+  gap: 11px;
+}
+.edit-story {
+  position: relative;
+  padding: 17px 20px 14px;
+  border: 1px solid rgba(13, 27, 42, 0.12);
+  border-radius: 12px;
+  background: #f5f3ed;
+  color: var(--color-royal);
+  transform-origin: 50% 50%;
+  min-height: 122px;
+}
+.edit-story-stretch {
+  background: #eeece5;
+}
+.edit-story-discovery {
+  background: #e5e9e6;
+}
+.story-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 9px;
+}
+.story-category {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.story-category::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #3f7569;
+}
+.edit-story-stretch .story-category::before {
+  background: var(--color-amber-ink);
+}
+.edit-story-discovery .story-category::before {
+  background: #785892;
+}
+.story-topic {
+  color: #52616a;
+}
+.edit-story h3 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.9vw, 27px);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-top: 12px;
+  letter-spacing: -0.025em;
+}
+.edit-story h3 a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.edit-story h3 a:hover {
+  color: var(--color-amber-ink);
+}
+.story-baseline {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+}
+.story-reason {
+  font-size: 10px;
+  line-height: 1.45;
+  color: #52616a;
+}
+.story-number {
+  font-size: 9px;
+  color: #69777e;
+}
+.edit-finish {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 11px;
+  color: rgba(248, 249, 250, 0.7);
+}
+.edit-check {
+  stroke: var(--color-amber);
+}
+.edition-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+  color: rgba(248, 249, 250, 0.55);
+  font-size: 10px;
+}
+.hero-replay {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 4px 0 14px;
+  cursor: pointer;
+  color: rgba(248, 249, 250, 0.8);
+  font-size: 11px;
+}
+.hero-replay:hover {
+  color: var(--color-amber);
+}
+.hero-actions a:focus-visible,
+.hero-replay:focus-visible,
+.hero-scroll-note:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 5px;
+}
+.story-fragment {
+  position: absolute;
+  opacity: 0;
+  width: 155px;
+  padding: 15px;
+  border: 1px solid rgba(248, 249, 250, 0.2);
+  border-radius: 8px;
+  background: var(--color-royal);
+  color: rgba(248, 249, 250, 0.75);
+  font-size: 11px;
+  z-index: -1;
+}
+.story-fragment i {
+  display: block;
+  height: 1px;
+  background: rgba(248, 249, 250, 0.22);
+  margin-top: 12px;
+}
+.story-fragment i:last-child {
+  width: 62%;
+  margin-top: 7px;
+}
+.story-fragment-0 {
+  top: -6px;
+  left: -65px;
+  transform: rotate(-12deg);
+}
+.story-fragment-1 {
+  top: 78px;
+  right: -80px;
+  transform: rotate(10deg);
+}
+.story-fragment-2 {
+  top: 217px;
+  left: -78px;
+  transform: rotate(-6deg);
+}
+.story-fragment-3 {
+  bottom: 63px;
+  right: -58px;
+  transform: rotate(14deg);
+}
+.story-fragment-4 {
+  bottom: -3px;
+  left: -26px;
+  transform: rotate(-7deg);
+}
+.story-fragment-5 {
+  top: -35px;
+  right: 16px;
+  transform: rotate(5deg);
+}
+.hero-scroll-note {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 25px;
+  margin-top: 26px;
+  border-top: 1px solid rgba(248, 249, 250, 0.12);
+  font-size: 11px;
+  color: rgba(248, 249, 250, 0.6);
+}
+.hero-scroll-note > span:last-child {
+  font-size: 18px;
+}
+@media (min-width: 1500px) {
+  .atlus-hero {
+    padding-top: 164px;
+  }
+}
+@media (max-width: 999px) {
+  .atlus-hero {
+    padding: 132px 7vw 30px;
+  }
+  .atlus-hero-layout {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+    min-height: auto;
+  }
+  .atlus-hero-layout--intro {
+    min-height: auto;
+  }
+  .hero-introduction {
+    text-align: center;
+    padding-bottom: 48px;
+  }
+  .hero-title {
+    font-size: clamp(76px, 12vw, 114px);
+    letter-spacing: -0.06em;
+  }
+  .hero-word {
+    display: inline-block;
+  }
+  .hero-tagline {
+    margin-top: 25px;
+  }
+  .hero-tagline .hand {
+    display: inline;
+    margin-left: 4px;
+  }
+  .hero-description {
+    margin: 15px auto 0;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  .hero-edition {
+    max-width: 480px;
+    margin: 12px auto 0;
+  }
+  .daily-atlus-dash .edition-stage {
+    height: 720px;
+  }
+  .edit-story h3 {
+    font-size: 25px;
+  }
+  .hero-scroll-note {
+    margin-top: 26px;
+  }
+}
+@media (max-width: 540px) {
+  .atlus-hero {
+    padding: 118px 24px 26px;
+  }
+  .hero-eyebrow {
+    font-size: 9px;
+    margin-bottom: 18px;
+    letter-spacing: 0.13em;
+  }
+  .hero-title {
+    font-size: clamp(57px, 14vw, 76px);
+  }
+  .hero-tagline {
+    font-size: 18px;
+    margin-top: 19px;
+  }
+  .hero-tagline .hand {
+    display: block;
+    margin-left: 0;
+    font-size: 32px;
+  }
+  .hero-description {
+    font-size: 13px;
+    max-width: 305px;
+    line-height: 1.8;
+  }
+  .hero-desktop-break {
+    display: none;
+  }
+  .hero-introduction {
+    padding-bottom: 29px;
+  }
+  .hero-actions {
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .hero-primary-cta,
+  .hero-secondary-cta {
+    font-size: 12px;
+    gap: 11px;
+  }
+  .hero-primary-cta {
+    padding-inline: 18px;
+  }
+  .hero-footnote {
+    font-size: 9px;
+  }
+  .edition-stage {
+    height: 510px;
+  }
+  .daily-atlus-dash .edition-stage {
+    height: 770px;
+  }
+  .edit-paper {
+    inset-inline: -8px;
+  }
+  .edit-masthead {
+    left: 9px;
+    right: 9px;
+  }
+  .edition-stories {
+    left: 0;
+    right: 0;
+    gap: 10px;
+  }
+  .edit-story {
+    padding: 15px 14px 12px;
+    min-height: 115px;
+  }
+  .edit-story h3 {
+    font-size: clamp(19px, 5.2vw, 24px);
+  }
+  .story-topline {
+    font-size: 8px;
+    gap: 7px;
+  }
+  .story-reason {
+    font-size: 9px;
+  }
+  .edit-finish {
+    bottom: 29px;
+    font-size: 9px;
+    gap: 6px;
+  }
+  .edit-kicker {
+    font-size: 9px;
+  }
+  .edit-for-you {
+    font-size: 25px;
+  }
+  .hero-scroll-note {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-replay {
+    display: none;
+  }
+  .hero-primary-cta,
+  .hero-secondary-cta {
+    transition: none;
+  }
+  .hero-primary-cta:hover,
+  .hero-secondary-cta:hover {
+    transform: none;
+  }
+}
+
+/* HANDWRITING LAYOUT — motion timing lives in src/lib/motion.ts.
+   Each word wraps as a unit, each glyph reveals independently. Don't set an
+   initial opacity here: the complete text must remain readable without JS. */
+.handwriting-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.handwriting-space::before {
+  content: attr(data-space);
+  white-space: pre;
+}
+.handwriting-letter {
+  display: inline-block;
+}
+.handwriting-letter::before {
+  content: attr(data-letter);
+}
+.brand-u {
+  display: inline-flex;
+  margin: 0 0.015em;
+  line-height: 0.72;
+  vertical-align: -0.035em;
+  transform: rotate(-2deg);
+}
+
+/* Short feedback on deliberate actions; decorative movement stays in the timelines. */
+.hero-replay {
+  transition: color 180ms ease;
+}
+.hero-primary-cta:active,
+.hero-secondary-cta:active {
+  transform: translateY(0);
+}
+@media (hover: none) {
+  .hero-primary-cta:hover,
+  .hero-secondary-cta:hover {
+    transform: none;
+  }
+}
+
+/* ANCHOR SCROLL — the browser handles wheel, trackpad and touch scrolling.
+   This only animates links such as The solution / Start onboarding.
+   Adjust 28px to change the space above a section after an anchor jump. */
+html {
+  scroll-padding-top: 28px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
