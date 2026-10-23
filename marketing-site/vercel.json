@@ -1,0 +1,70 @@
+{
+        "$schema": "https://openapi.vercel.sh/vercel.json",
+        "redirects": [
+                {
+                        "source": "/r/:token",
+                        "destination": "https://app.joinatlus.com/r/:token",
+                        "permanent": false
+                },
+                {
+                        "source": "/f/:token",
+                        "destination": "https://app.joinatlus.com/f/:token",
+                        "permanent": false
+                },
+                {
+                        "source": "/feedback/more/:token",
+                        "destination": "https://app.joinatlus.com/feedback/more/:token",
+                        "permanent": false
+                },
+                {
+                        "source": "/feedback/thanks",
+                        "destination": "https://app.joinatlus.com/feedback/thanks",
+                        "permanent": false
+                },
+                {
+                        "source": "/today",
+                        "destination": "https://app.joinatlus.com/today",
+                        "permanent": false
+                },
+                {
+                        "source": "/archive",
+                        "destination": "https://app.joinatlus.com/archive",
+                        "permanent": false
+                },
+                {
+                        "source": "/settings",
+                        "destination": "https://app.joinatlus.com/settings",
+                        "permanent": false
+                },
+                {
+                        "source": "/profile",
+                        "destination": "https://app.joinatlus.com/profile",
+                        "permanent": false
+                },
+                {
+                        "source": "/onboarding",
+                        "destination": "https://app.joinatlus.com/onboarding",
+                        "permanent": false
+                },
+                {
+                        "source": "/login",
+                        "destination": "https://app.joinatlus.com/login",
+                        "permanent": false
+                },
+                {
+                        "source": "/forgot-password",
+                        "destination": "https://app.joinatlus.com/forgot-password",
+                        "permanent": false
+                },
+                {
+                        "source": "/reset-password",
+                        "destination": "https://app.joinatlus.com/reset-password",
+                        "permanent": false
+                },
+                {
+                        "source": "/auth/callback",
+                        "destination": "https://app.joinatlus.com/auth/callback",
+                        "permanent": false
+                }
+        ]
+}
